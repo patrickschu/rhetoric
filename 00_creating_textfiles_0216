@@ -1,37 +1,53 @@
+
 ## converting our files to standard format
 
 from bs4 import BeautifulSoup
+from bs4.diagnose import diagnose
 import os
 import re
+import codecs
 
+os.chdir("C:\Users\ps22344.AUSTIN\Desktop")
 #kennedy
 # we wroking with the html 4 export from adobe acrobat
 #first 44 pages deleted; 222-308 deleted
 #do a codecs open please
-soup=BeautifulSoup(open(os.path.join("C:\Users\ps22344.AUSTIN\Desktop", "Kennedy4.htm")))
+inputi=codecs.open(os.path.join("C:\Users\ps22344.AUSTIN\Desktop", "Kennedy4.htm")).read()
+print inputi[len(inputi)-200:len(inputi)]
+soup=BeautifulSoup(inputi, 'html.parser')
+#print diagnose(soup)
+print "input:"
+print "inputfile", len(inputi)
+print "soup", len(soup), "\n------\n"
 
-# we want a positive id since there is so much trash in between
-# --> all text sized 10.4 is extracted. Cause that's the real deal. 
+##print soup.prettify()
+### we want a positive id since there is so much trash in between
+### --> all text sized 10.4 is extracted. Cause that's the real deal. 
 text=soup.find_all('span', style=re.compile("font-size:10.4pt"))
 print len(text)
-
-#delete tags
-#extract only text
+##
+##
+###extract only text
 texti=[i.string for i in text]
-texti2=[i for i in texti if i]
-##print len(texti)
-##print len(texti2)
-##print texti[5:6]
-t=" ".join(texti2)
-print texti2[:10]
+#print texti[20:30]
+###there is some terrible issues with hyphenated words
+texti2=["PLACEHOLDER" if i is None else i for i in texti]
+#print texti2[20:30]
+###putting all lists into a string
+texti3=" ".join(texti2)
+print texti3[:600]
+###replace the placeholders we added earlier
+texti4=re.sub(" PLACEHOLDER ", "", texti3)
+#print texti4[:600]
+###done
+bib="On rhetoric : a theory of civic discourse by Aristotle ; translated with introduction, notes, and appendices by George A. Kennedy. 2nd edition"
+output=codecs.open("rhetoric_kennedy_0216.txt", "a", "utf-8")
+output.write("<file> <title=rhetoric> <author=aristotle> <translator=kennedy, george> \
+<source=unknown> <pubdate=2007> <bibinfo="+bib+"> <text>")
+output.write(" "+texti4+ "</text> </file>")
+output.close()
 
-text_tagsdeleted=[re.sub("<.?>", "", i) for i.attrs in text]
-print len(text_tagsdeleted)
-##print text_tagsdeleted[6]
-
-# write to file
-#print soup.prettify()[40000:42000]
-#stolen from http://stackoverflow.com/questions/13794532/python-regular-expression-for-beautiful-soup
+#some ideas stolen from http://stackoverflow.com/questions/13794532/python-regular-expression-for-beautiful-soup
 #>>> soup.find_all('div', class_=re.compile('comment-'))
 #[<div class="comment comment-xxxx..."></div>]
 #text = [s['style'] for s in soup.find_all('span')]
