@@ -6,56 +6,117 @@ from bs4.diagnose import diagnose
 import os
 import re
 import codecs
+import nltk
+#pc
+#os.chdir("C:\Users\ps22344.AUSTIN\Desktop")
+#mac
+os.chdir("/Users/ps22344/Desktop")
 
-os.chdir("C:\Users\ps22344.AUSTIN\Desktop")
-#kennedy
+
+##TRANSLATOR BY TRANSLATOR
+
+
+
+##kennedy
 # we wroking with the html 4 export from adobe acrobat
 #first 44 pages deleted; 222-308 deleted
 #do a codecs open please
-inputi=codecs.open(os.path.join("C:\Users\ps22344.AUSTIN\Desktop", "Kennedy4.htm")).read()
-print inputi[len(inputi)-200:len(inputi)]
-soup=BeautifulSoup(inputi, 'html.parser')
-#print diagnose(soup)
-print "input:"
-print "inputfile", len(inputi)
-print "soup", len(soup), "\n------\n"
+# inputi=codecs.open(os.path.join("C:\Users\ps22344.AUSTIN\Desktop", "Kennedy4.htm")).read()
+# print inputi[len(inputi)-200:len(inputi)]
+# soup=BeautifulSoup(inputi, 'html.parser')
+# #print diagnose(soup)
+# print "input:"
+# print "inputfile", len(inputi)
+# print "soup", len(soup), "\n------\n"
+# 
+# ##print soup.prettify()
+# ### we want a positive id since there is so much trash in between
+# ### --> all text sized 10.4 is extracted. Cause that's the real deal. 
+# text=soup.find_all('span', style=re.compile("font-size:10.4pt"))
+# print len(text)
+# ##
+# ##
+# ###extract only text
+# texti=[i.string for i in text]
+# #print texti[20:30]
+# ###there is some terrible issues with hyphenated words
+# texti2=["PLACEHOLDER" if i is None else i for i in texti]
+# #print texti2[20:30]
+# ###putting all lists into a string
+# texti3=" ".join(texti2)
+# print texti3[:600]
+# ###replace the placeholders we added earlier
+# texti4=re.sub(" PLACEHOLDER ", "", texti3)
+# #print texti4[:600]
+# ###done
+# bib="On rhetoric : a theory of civic discourse by Aristotle ; translated with introduction, notes, and appendices by George A. Kennedy. 2nd edition"
+# output=codecs.open("rhetoric_kennedy_0216.txt", "a", "utf-8")
+# output.write("<file> <title=rhetoric> <author=aristotle> <translator=kennedy, george> \
+# <source=unknown> <pubdate=2007> <bibinfo="+bib+"> <text>")
+# output.write(" "+texti4+ "</text> </file>")
+# output.close()
 
-##print soup.prettify()
-### we want a positive id since there is so much trash in between
-### --> all text sized 10.4 is extracted. Cause that's the real deal. 
-text=soup.find_all('span', style=re.compile("font-size:10.4pt"))
-print len(text)
-##
-##
-###extract only text
-texti=[i.string for i in text]
-#print texti[20:30]
-###there is some terrible issues with hyphenated words
-texti2=["PLACEHOLDER" if i is None else i for i in texti]
-#print texti2[20:30]
-###putting all lists into a string
-texti3=" ".join(texti2)
-print texti3[:600]
-###replace the placeholders we added earlier
-texti4=re.sub(" PLACEHOLDER ", "", texti3)
-#print texti4[:600]
-###done
-bib="On rhetoric : a theory of civic discourse by Aristotle ; translated with introduction, notes, and appendices by George A. Kennedy. 2nd edition"
-output=codecs.open("rhetoric_kennedy_0216.txt", "a", "utf-8")
-output.write("<file> <title=rhetoric> <author=aristotle> <translator=kennedy, george> \
-<source=unknown> <pubdate=2007> <bibinfo="+bib+"> <text>")
-output.write(" "+texti4+ "</text> </file>")
-output.close()
+
+
+###################
+#roberts (MIT)
+
+# textregex=re.compile("-{70}(.*?)THE END", re.DOTALL)
+# 
+# #do a codecs open please
+# inputi=codecs.open(os.path.join("translations", "rhetoric_Roberts.txt"), "r").read()
+# print inputi[len(inputi)-200:len(inputi)]
+# print "input:"
+# print "inputfile", len(inputi)
+# # ###extract only text
+# text=re.findall(textregex, inputi)[0]
+# print text[len(text)-200:len(text)]
+# #done
+# # we write a file
+# bib="Provided by The Internet Classics Archive. See bottom for copyright. Available online at http://classics.mit.edu//Aristotle/rhetoric.html"
+# 
+# output=codecs.open("rhetoric_roberts_0216.txt", "a", "utf-8")
+# output.write("<file> <title=rhetoric> <author=aristotle> <translator=roberts, rhys> \
+#  <source=http://classics.mit.edu//Aristotle/rhetoric.html> <pubdate=unknown> <bibinfo="+bib+"> <text>")
+# output.write(" "+text+ "</text> </file>")
+# output.close()
+
+
+
+#################
+#freese (Tufts)
+
+books=['book1', 'book2', 'book3']
+books=['book1']
+
+for item in books:
+	inputi=codecs.open(os.path.join("translations", "rhetoric_freese_"+item+".txt"), "r").read()
+	soup=BeautifulSoup(inputi, 'html.parser')
+	#print soup.prettify()
+	#<div class="text">
+	results=soup.find_all('div', 'text') 
+	text= re.sub("\[.*?\]",  " ", unicode(results[0]))
+	#destroys numbers btw parentheses
+	cleantext= re.sub(">(\d+)<", " ", text)
+	#this gets rid of html
+	cleanertext= re.sub("<(.*?)>", " ", cleantext)
+	
+	#this gets rid of page nos
+	#note that it also might destroy annotations!
+	
+	print cleanertext
+	# print len(results)
+# 	print type(results)	##(class="text")
+# 	text=[r.text for r in results][0]
+# 	print len(text)
+# 	textclean=re.sub("<.*?>", " ", text)
+# 	print len(textclean)
+# 	print text
+
+
+
 
 #some ideas stolen from http://stackoverflow.com/questions/13794532/python-regular-expression-for-beautiful-soup
 #>>> soup.find_all('div', class_=re.compile('comment-'))
 #[<div class="comment comment-xxxx..."></div>]
 #text = [s['style'] for s in soup.find_all('span')]
-
-
-#roberts
-
-
-
-#freese
-
