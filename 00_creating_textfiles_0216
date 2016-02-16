@@ -1,0 +1,45 @@
+## converting our files to standard format
+
+from bs4 import BeautifulSoup
+import os
+import re
+
+#kennedy
+# we wroking with the html 4 export from adobe acrobat
+#first 44 pages deleted; 222-308 deleted
+#do a codecs open please
+soup=BeautifulSoup(open(os.path.join("C:\Users\ps22344.AUSTIN\Desktop", "Kennedy4.htm")))
+
+# we want a positive id since there is so much trash in between
+# --> all text sized 10.4 is extracted. Cause that's the real deal. 
+text=soup.find_all('span', style=re.compile("font-size:10.4pt"))
+print len(text)
+
+#delete tags
+#extract only text
+texti=[i.string for i in text]
+texti2=[i for i in texti if i]
+##print len(texti)
+##print len(texti2)
+##print texti[5:6]
+t=" ".join(texti2)
+print texti2[:10]
+
+text_tagsdeleted=[re.sub("<.?>", "", i) for i.attrs in text]
+print len(text_tagsdeleted)
+##print text_tagsdeleted[6]
+
+# write to file
+#print soup.prettify()[40000:42000]
+#stolen from http://stackoverflow.com/questions/13794532/python-regular-expression-for-beautiful-soup
+#>>> soup.find_all('div', class_=re.compile('comment-'))
+#[<div class="comment comment-xxxx..."></div>]
+#text = [s['style'] for s in soup.find_all('span')]
+
+
+#roberts
+
+
+
+#freese
+
