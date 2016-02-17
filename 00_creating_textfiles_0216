@@ -85,33 +85,43 @@ os.chdir("/Users/ps22344/Desktop")
 
 #################
 #freese (Tufts)
+# 
+# books=['book1', 'book2', 'book3']
+# #books=['book1']
+# 
+# 
+# #our regexes
+# #this gets rid of page nos
+# #note that it also might destroy annotations!
+# #pagenumberdeleter=re.compile("\[<?.*?>?]")
+# htmldeleter=re.compile("<.*?>")
+# notedeleter=re.compile("(?:>)\d+(?:<)")
+# pagenumberdeleter=re.compile("\[\s+]")
+# whitespacedeleter=re.compile("\s+")
+# 
+# bib="Aristotle in 23 Volumes, Vol. 22, translated by J. H. Freese. Aristotle. Cambridge and London. Harvard University Press; William Heinemann Ltd. 1926."
+# 
+# output=codecs.open("rhetoric_freese_0216.txt", "a", "utf-8")
+# output.write("<file> <title=rhetoric> <author=aristotle> <translator=freese, j> <source=http://www.perseus.tufts.edu/> <pubdate=1926> <bibinfo="+bib+"> <text>")
+# 	
+# 
+# for item in books:
+# 	inputi=codecs.open(os.path.join("translations", "rhetoric_freese_"+item+".txt"), "r").read()
+# 	soup=BeautifulSoup(inputi, 'html.parser')
+# 	#print soup.prettify()
+# 	#<div class="text">
+# 	results=soup.find_all('div', 'text') 
+# 	text= re.sub(notedeleter,  " ", unicode(results[0]))
+# 	cleantext=re.sub(htmldeleter,  " ", text)
+# 	cleantext=re.sub(pagenumberdeleter,  " ", cleantext)
+# 	cleantext=re.sub(whitespacedeleter, " ", cleantext)
+# 	print cleantext
+# 	print "\n-------\n"
+# 	output.write(" "+cleantext)
+# 
+# output.write(" </text> </file>")
+# output.close()
 
-books=['book1', 'book2', 'book3']
-books=['book1']
-
-for item in books:
-	inputi=codecs.open(os.path.join("translations", "rhetoric_freese_"+item+".txt"), "r").read()
-	soup=BeautifulSoup(inputi, 'html.parser')
-	#print soup.prettify()
-	#<div class="text">
-	results=soup.find_all('div', 'text') 
-	text= re.sub("\[.*?\]",  " ", unicode(results[0]))
-	#destroys numbers btw parentheses
-	cleantext= re.sub(">(\d+)<", " ", text)
-	#this gets rid of html
-	cleanertext= re.sub("<(.*?)>", " ", cleantext)
-	
-	#this gets rid of page nos
-	#note that it also might destroy annotations!
-	
-	print cleanertext
-	# print len(results)
-# 	print type(results)	##(class="text")
-# 	text=[r.text for r in results][0]
-# 	print len(text)
-# 	textclean=re.sub("<.*?>", " ", text)
-# 	print len(textclean)
-# 	print text
 
 
 
