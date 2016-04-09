@@ -1,8 +1,5 @@
 import re, numpy as np, codecs, os, nltk, collections, random, math
 from string  import digits
-#maybe: if prob of . above a certain level, quit
-# or add more . to the mix
-
 
 print "start"
 #helper funcs
