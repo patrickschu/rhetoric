@@ -1,5 +1,8 @@
-import re, numpy as np, codecs, os, nltk, collections, random
+import re, numpy as np, codecs, os, nltk, collections, random, math
 from string  import digits
+#maybe: if prob of . above a certain level, quit
+# or add more . to the mix
+
 
 print "start"
 #helper funcs
@@ -27,7 +30,6 @@ def dictmaker(filelist, no_of_grams=2):
 	#collecting words
 	#we should eliminate all caps words as these are section headers
 	for fili in filelist:
-		print fili
 		inputfile=codecs.open(os.path.join("out",fili), "r", "utf-8").read()
  		inputtext=adtextextractor(inputfile, fili)
  		splittext=nltk.word_tokenize(inputtext)
@@ -36,19 +38,11 @@ def dictmaker(filelist, no_of_grams=2):
 		ngrams=find_ngrams(cleantext,no_of_grams)
 		for ngram in ngrams:
 			vocab[ngram]=vocab[ngram]+1
-		return vocab
+	return vocab
 		#cleantext_lo=[i.lower() for i in cleantext]
 		
 # 			splittextlo=[i.lower() for i in splittext]
-# 			#do we want to lemmatize or things like that
-# 			for word in splittextlo:
-# 				if word not in vocab:
-# 					vocab[word]=1
-# 				else:
-# 					vocab[word]=vocab[word]+1
-# 	print "Our vocab dictionary has {} entries".format(len(vocab))
-# 	print "Our feature dictionary has {} entries\n---------------\n".format(len(featuredict))
-# 	return featuredict
+
 
 
 #calculate probs
@@ -60,7 +54,7 @@ def dictmaker(filelist, no_of_grams=2):
 # probability of -. followed by i - i followed by have -have followed by .
 
 
-
+#this is only called on within sentbuilder
 def generatemachine(gramdict,worddict, string):
 	count=0
 	#output: "." + n*x + "."
@@ -93,8 +87,13 @@ def sentbuilder(gramdict, worddict, startstring, endstring):
 	word=random.choice(generatemachine(gramdict, worddict, ".")[0:10])[0]
 	print word
 	while word not in endstring:
-		word= random.choice(generatemachine(gramdict, worddict, word)[0:5])[0]
-		print word
+		wordlist= generatemachine(gramdict, worddict, word)
+		if "." in [i[0] for i in wordlist[0:5]]: 
+			print  "breaking"
+			return "x"
+		else:
+			word = random.choice(wordlist[0:10])[0]
+			print word
 	# while result[0][0] != ".":
 # 		
 # 	
@@ -112,13 +111,17 @@ def main():
 	dir="out"
 	files=[i for i in os.listdir(dir) if not i.startswith(".")]
 	worddicti=dictmaker(files, 1)
+	#standard count for "." is 34607
+	#worddicti[(u'.',)]=10000
+	# for i in worddicti:
+# 		print i
 	print "the word dictionary is {} items long".format(len(worddicti))
 # 	for entry in worddicti:
 # 		if worddicti[entry] > 20:
 # 			print entry[0]
 	gramdicti=dictmaker(files, 4)
 	print "the gram dictionary is {} items long".format(len(gramdicti))
-	sentbuilder(gramdicti,worddicti, ".", ".")
+	sentbuilder(gramdicti,worddicti, ".", ".!?\"")
 	
 	#frequencies=generatemachine(string, gramdicti)
 	
