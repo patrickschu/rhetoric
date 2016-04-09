@@ -75,7 +75,7 @@ def generatemachine(gramdict,worddict, string):
 	for entry in temp_dict:
 		if not entry == 'count' and not entry =='Part':
 			#print entry, temp_dict[entry], temp_dict['count']
-			freq_dict[entry]=temp_dict[entry]/temp_dict['count']*(worddict[entry]/5)
+			freq_dict[entry]=temp_dict[entry]/temp_dict['count']#*(worddict[entry]/5)
 	#stolen from: http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
 	freq_dict_sorted=sorted(freq_dict.items(), key=lambda x: x[1], reverse=True)
 	return freq_dict_sorted
@@ -84,52 +84,53 @@ def generatemachine(gramdict,worddict, string):
 def sentbuilder(gramdict, worddict, startstring, endstring):
 	#start with ".", pick follow up from list of top fifty, until you hit "." again
 	sentence=[]
+	#total word count
+	total=sum(worddict.values())
 	word=random.choice(generatemachine(gramdict, worddict, ".")[0:10])[0]
-	print word
+	sentence.append(word)
 	while word not in endstring:
 		wordlist= generatemachine(gramdict, worddict, word)
-		if "." in [i[0] for i in wordlist[0:5]]: 
+		if "." in [i[0] for i in wordlist][0]: 
 			print  "breaking"
-			return "x"
+			probs=[float(worddict[s])/total for s in sentence]
+			probs=math.log(np.prod(np.array(probs)))
+			#print "probability of sentence", probs
+			return (sentence, probs)
 		else:
 			word = random.choice(wordlist[0:10])[0]
-			print word
-	# while result[0][0] != ".":
-# 		
-# 	
-# 	firststep=generatemachine(gramdict, ".")
-# 	
-# 	nextstep=generatemachine(gramdict, firststep[0][0])
-	
-	# 
-# 	while addition not ".":
-# 		
-# 		generatemachine(gramdict, firststep[0][0])
-# 	print second_word[0][0]
+			sentence.append(word)
+	#calculate probability of sentence
+	probs=[float(worddict[s])/total for s in sentence]
+	probs=math.log(np.prod(np.array(probs)))
+	#print "probability of sentence", probs
+	return (sentence, probs)
 
-def main():
+
+def main(iter):
 	dir="out"
 	files=[i for i in os.listdir(dir) if not i.startswith(".")]
 	worddicti=dictmaker(files, 1)
+	worddicti={k[0]:worddicti[k] for k in worddicti}
+	print worddicti['The']
 	#standard count for "." is 34607
-	#worddicti[(u'.',)]=10000
-	# for i in worddicti:
-# 		print i
 	print "the word dictionary is {} items long".format(len(worddicti))
 # 	for entry in worddicti:
 # 		if worddicti[entry] > 20:
 # 			print entry[0]
 	gramdicti=dictmaker(files, 4)
 	print "the gram dictionary is {} items long".format(len(gramdicti))
-	sentbuilder(gramdicti,worddicti, ".", ".!?\"")
-	
+	for i in range(iter):
+		output_sentence, output_prob=sentbuilder(gramdicti,worddicti, ".", ".!?\"")
+		if output_prob > - 100:
+				print "Aristotle says: \"{}\"".format(" ".join(output_sentence))
+				#print "Aristotle says: \"{}\" \n with a probability of {}".format(" ".join(output_sentence), output_prob)
 	#frequencies=generatemachine(string, gramdicti)
 	
 	
 
 
-main()
-print "finished"
+main(100)
+
 #generate outputsentences
 
 
