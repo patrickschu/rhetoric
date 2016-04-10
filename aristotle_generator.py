@@ -1,5 +1,8 @@
 import re, numpy as np, codecs, os, nltk, collections, random, math
 from string  import digits
+#maybe: if prob of . above a certain level, quit
+# or add more . to the mix
+
 
 print "start"
 #helper funcs
@@ -31,6 +34,7 @@ def dictmaker(filelist, no_of_grams=2):
  		inputtext=adtextextractor(inputfile, fili)
  		splittext=nltk.word_tokenize(inputtext)
 		cleantext=[i for i in splittext if not i.isupper()]
+		cleantext=[i.lower() for i in cleantext]
 		#cleanertext=[i for i in cleantext if not i in digits]
 		ngrams=find_ngrams(cleantext,no_of_grams)
 		for ngram in ngrams:
@@ -72,7 +76,7 @@ def generatemachine(gramdict,worddict, string):
 	for entry in temp_dict:
 		if not entry == 'count' and not entry =='Part':
 			#print entry, temp_dict[entry], temp_dict['count']
-			freq_dict[entry]=temp_dict[entry]/temp_dict['count']#*(worddict[entry]/5)
+			freq_dict[entry]=(temp_dict[entry]/temp_dict['count'])#*(float(worddict[entry])/2)
 	#stolen from: http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
 	freq_dict_sorted=sorted(freq_dict.items(), key=lambda x: x[1], reverse=True)
 	return freq_dict_sorted
@@ -83,19 +87,19 @@ def sentbuilder(gramdict, worddict, startstring, endstring):
 	sentence=[]
 	#total word count
 	total=sum(worddict.values())
-	word=random.choice(generatemachine(gramdict, worddict, ".")[0:10])[0]
+	word=random.choice(generatemachine(gramdict, worddict, ".")[0:20])[0]
 	sentence.append(word)
 	while word not in endstring:
 		wordlist= generatemachine(gramdict, worddict, word)
-		if "." in [i[0] for i in wordlist][0]: 
-			print  "breaking"
-			probs=[float(worddict[s])/total for s in sentence]
-			probs=math.log(np.prod(np.array(probs)))
-			#print "probability of sentence", probs
-			return (sentence, probs)
-		else:
-			word = random.choice(wordlist[0:10])[0]
-			sentence.append(word)
+		# if "." in [i[0] for i in wordlist][0]: 
+# 			print  "breaking"
+# 			probs=[float(worddict[s])/total for s in sentence]
+# 			probs=math.log(np.prod(np.array(probs)))
+# 			#print "probability of sentence", probs
+# 			return (sentence, probs)
+# 		else:
+		word = random.choice(wordlist[0:20])[0]
+		sentence.append(word)
 	#calculate probability of sentence
 	probs=[float(worddict[s])/total for s in sentence]
 	probs=math.log(np.prod(np.array(probs)))
@@ -108,9 +112,10 @@ def main(iter):
 	files=[i for i in os.listdir(dir) if not i.startswith(".")]
 	worddicti=dictmaker(files, 1)
 	worddicti={k[0]:worddicti[k] for k in worddicti}
-	print worddicti['The']
+	#print worddicti['The']
 	#standard count for "." is 34607
 	print "the word dictionary is {} items long".format(len(worddicti))
+	print "it has {} words".format(sum(worddicti.values()))
 # 	for entry in worddicti:
 # 		if worddicti[entry] > 20:
 # 			print entry[0]
@@ -118,9 +123,9 @@ def main(iter):
 	print "the gram dictionary is {} items long".format(len(gramdicti))
 	for i in range(iter):
 		output_sentence, output_prob=sentbuilder(gramdicti,worddicti, ".", ".!?\"")
-		if output_prob > - 100:
-				print "Aristotle says: \"{}\"".format(" ".join(output_sentence))
-				#print "Aristotle says: \"{}\" \n with a probability of {}".format(" ".join(output_sentence), output_prob)
+		if output_prob > - 60:
+				#print "Aristotle says: \"{}\"".format(" ".join(output_sentence))
+				print "Aristotle says: \"{}\" \n with a probability of {}".format(" ".join(output_sentence), output_prob)
 	#frequencies=generatemachine(string, gramdicti)
 	
 	
