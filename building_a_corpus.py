@@ -13,12 +13,12 @@ signal="\n----------------------------------------------------------------------
 good=[]
 
 print os.getcwd()
-files=[i for i in os.listdir("classics_0325") if not i.startswith(".")]
+files=[i for i in os.listdir("test") if not i.startswith(".")]
 
 print "We have {} files".format(len(files))
 
 files_to_process=[i for i in files if not open (
-		"classics_0325/"+i, "r").read().startswith("<file")]
+		"test/"+i, "r").read().startswith("<file")]
 		
 print "We need to process {} of them".format(len(files_to_process))
 
@@ -26,7 +26,7 @@ print files_to_process
 
 for fili in files_to_process:
 	print fili
-	inputfile=open(os.path.join("classics_0325", fili), "r").read()
+	inputfile=open(os.path.join("test", fili), "r").read()
 	author = fili.split("_")[0]
 	title= fili.split("_")[1]
 	title=re.sub("(1?b?\.mb\.txt|1?b?\.pl\.txt)", "", title)
