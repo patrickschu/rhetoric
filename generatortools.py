@@ -36,10 +36,42 @@ def dictmaker(filelist, no_of_grams=1, lowercase_text=False, remove_punct=False,
 			cleantext=[i.strip("\"\'") for i in cleantext]
 		ngrams=find_ngrams(cleantext,no_of_grams)
 		for ngram in ngrams:
-			vocab[ngram]=vocab[ngram]+1
+			if len(ngram) == 1:
+				vocab[ngram[0]]=vocab[ngram[0]]+1
+			else:		
+				vocab[ngram]=vocab[ngram]+1
 	return vocab
 
 
+#this is only called on within sentbuilder
+def generatemachine(worddict, ngramdict, string):
+	'''
+	This takes a vocab dictionary and a ngram dictionary to compute probabilities 
+	(relative freqs) for the "string" input. Returns a dictionary of frequencies. 
+	'''
+
+	gramlength=set([len(i) for i in ngramdict.keys()])
+	indexer=list(gramlength)[0]-1
+	#output: "." + n*x + "."
+	string_dict=collections.defaultdict(float)
+	freq_dict=collections.defaultdict(float)
+	for ngram in ngramdict:
+		#remember that string is our variable
+		if string in ngram:
+			#string_dict['overall_count']=string_dict['overall_count'] + ngramdict[ngram]
+			#exclude if last in gram
+			if len(ngram) <= ngram.index(string)+indexer:
+				#string_dict['skipped']=string_dict['skipped']+ngramdict[ngram]
+				pass
+			else:
+				following_word=ngram[ngram.index(string)+indexer]
+				string_dict[following_word]=string_dict[following_word]+ngramdict[ngram]
+	# calculating relative frequencies
+ 	for entry in string_dict:
+ 		if not entry =='Part':
+ 			freq_dict[entry]=string_dict[entry]/worddict[string]
+ 	return freq_dict
+ 
 
 
 
