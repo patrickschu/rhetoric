@@ -2,12 +2,14 @@ import re
 import nltk
 import collections
 import codecs
+import random
+import math
 
 
 
 
 
-def dictmaker(filelist, no_of_grams=1, lowercase_text=False, remove_punct=False, remove_allcaps=True, remove_quotes=True):
+def dictmaker(filelist, no_of_grams=1, lowercase_text=False, rm_punct=False, rm_allcaps=True, rm_quotes=True, rm_minor_punct=True):
 	
 	''' 
 	Input: a list of .txt file paths. Finds text within <text> ... </text>. 
@@ -22,18 +24,20 @@ def dictmaker(filelist, no_of_grams=1, lowercase_text=False, remove_punct=False,
  		inputtext=adtextextractor(inputfile, fili)
  		splittext=nltk.word_tokenize(inputtext)
  		cleantext=splittext
- 		if remove_allcaps == True:
+ 		if rm_allcaps == True:
  			#this removes words in all caps
 			cleantext=[i for i in cleantext if not i.isupper()]
 		if lowercase_text == True: 
 			# lower case all words
 			cleantext=[i.lower() for i in cleantext]
-		if remove_punct==True:
+		if rm_punct==True:
 			#removes punctuation as item and if adhering to word items
 			#maybe we want to separate these out later
 			cleantext=[i.strip(punctuation) for i in cleantext if re.search("\w+", i)]
-		if remove_quotes==True:
+		if rm_quotes==True:
 			cleantext=[i.strip("\"\'") for i in cleantext]
+		if rm_minor_punct==True:
+			cleantext=[i for i in cleantext if i not in [",", ";","-", "(", ")"]]
 		ngrams=find_ngrams(cleantext,no_of_grams)
 		for ngram in ngrams:
 			if len(ngram) == 1:
@@ -45,20 +49,23 @@ def dictmaker(filelist, no_of_grams=1, lowercase_text=False, remove_punct=False,
 
 #this is only called on within sentbuilder
 def generatemachine(worddict, ngramdict, string):
+
 	'''
 	This takes a vocab dictionary and a ngram dictionary to compute probabilities 
 	(relative freqs) for the "string" input. Returns a dictionary of frequencies. 
 	'''
 
+	# establishing the n of our ngrams
 	gramlength=set([len(i) for i in ngramdict.keys()])
 	indexer=list(gramlength)[0]-1
-	#output: "." + n*x + "."
+	#dict to collocation counts for the string
 	string_dict=collections.defaultdict(float)
+	# dict to compute frequencies
 	freq_dict=collections.defaultdict(float)
+	#iterating over ngrams in the input dict
 	for ngram in ngramdict:
 		#remember that string is our variable
 		if string in ngram:
-			#string_dict['overall_count']=string_dict['overall_count'] + ngramdict[ngram]
 			#exclude if last in gram
 			if len(ngram) <= ngram.index(string)+indexer:
 				#string_dict['skipped']=string_dict['skipped']+ngramdict[ngram]
@@ -73,7 +80,45 @@ def generatemachine(worddict, ngramdict, string):
  	return freq_dict
  
 
-
+def sentbuilder(startstring, endstring, threshold, worddict, *args):
+	
+	'''
+	Takes a string to start and a string to end the sentence, generates sentences. 
+	Worddict needs to be overall vocab, then unlimited number of ngram dictionaries as args.
+	Threshold sets the number of items to consider when choosing from the candidates
+	for next word from sorted list. 
+	***Not yet flexible to go over trigram / random number.
+	***	
+	'''
+	#start with ".", pick follow up from list of top fifty, until you hit "." again
+	sentence=[startstring]
+	probs=[]
+	#total word count
+	total=sum(worddict.values())
+	first_word=generatemachine(worddict, args[0], startstring)#random.choice(generatemachine(worddict, arg[0], "."))
+	first_word_sorted=sorted(first_word.items(), key=lambda x: x[1], reverse=True)
+	word=random.choice(first_word_sorted)
+	#print word
+	sentence.append(word[0])
+	probs.append(math.log(word[1]))
+ 	while word[0] not in endstring:
+ 		prev_word=sentence[len(sentence)-2]
+ 		#print prev_word
+ 		current_word=sentence[len(sentence)-1]
+ 		#print current_word
+ 		word_less_two=generatemachine(worddict, args[1],  prev_word)
+ 		#print "word less 2 length ", len(word_less_two)
+ 		word_less_one=generatemachine(worddict, args[0], current_word)
+ 		#print "word less 1 length ", len(word_less_one)
+ 		freqs={k:v*word_less_two.get(k, 1) for k, v in word_less_one.items()}
+ 		#print "word less 2 UPDATED length ", len(word_less_two)
+ 		next_word_sorted=sorted(freqs.items(), key=lambda x: x[1], reverse=True)
+ 		#word=next_word_sorted[0][0]
+ 		word=random.choice(next_word_sorted[:threshold])
+ 		sentence.append(word[0])
+ 		probs.append(math.log(word[1]))
+ 	else:
+ 		return (sentence, probs)
 
 
 
