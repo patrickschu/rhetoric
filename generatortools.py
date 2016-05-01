@@ -4,6 +4,7 @@ import collections
 import codecs
 import random
 import math
+from twython import Twython
 
 
 
@@ -120,7 +121,18 @@ def sentbuilder(startstring, endstring, threshold, worddict, *args):
  	else:
  		return (sentence, probs)
 
-
+def loginmachine(filename):
+	'''takes file with login data formatted like so:
+	API_key,API_secret,App_token,App_secret
+	logs in, returns Twython object'''
+	keyfile=open(filename, "r")
+	login=keyfile.read()
+	key=login.split(",")[0]
+	secret=login.split(",")[1]
+	token=login.split(",")[2]
+	token_secret=login.split(",")[3]
+	twython_object = Twython(key, secret,token,token_secret)
+	return twython_object
 
 #helper functions
 

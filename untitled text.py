@@ -74,9 +74,12 @@ from twython import Twython
 s=open("twitter_keys.txt", "r")
 t=s.read()
 key=t.split(",")[0]
-token=t.split(",")[1]
-# first item is API key, second is API secret
+secret=t.split(",")[1]
+token=t.split(",")[2]
+token_secret=t.split(",")[3]
+# first item is API key, second is API secret, third is access token, 4th token secret
+#twitter = Twython(APP_KEY, APP_SECRET,
+#                  OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
-
-boti= Twython(key, access_token=token)
-boti.search(q="python")
+boti= Twython(key, secret,token,token_secret)
+boti.update_status(status='How hard can this be?')
