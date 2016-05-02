@@ -1,7 +1,7 @@
-## Digital Writing and Research Lab, UT Austin. 
-Spring 2016: "Digital Archiving and the object"
+### Digital Writing and Research Lab, UT Austin. 
+###Spring 2016: "Digital Archiving and the object"
 
-### Getting to know Arisbotle
+#### Getting to know Arisbotle
 
 You can read more about this project [here](http://www.dwrl.utexas.edu/2016/04/19/reviving-the-archive-aristotle-re-animated/). 
 
