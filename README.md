@@ -17,8 +17,7 @@ then type
 
 `python arisbotle.py "folder_of_textfiles"`
 
-where the folder_of_textfiles is a directory that contains the text files you want to train the machine on.  
-Additional settings, to be added in this order after the folder_of_textfiles:
+where the folder_of_textfiles is a directory that contains the text files you want to train the machine on. It's easiest if you keep in the same folder the script is in. Additional settings, to be added in this order after the folder_of_textfiles:
 
 `iter = 100, probability_cutoff = - 40 , threshold = 10, tweet=False`
 
