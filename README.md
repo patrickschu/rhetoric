@@ -1,6 +1,6 @@
 ### Digital Writing and Research Lab: "Digital Archiving and the Object"
 
-This repository contains some scripts used for the "Digital Archiving and the Object" project at the DWRL @ UT Austin in the Spring of 2016, among them our beloved speech bot Arisbotle. 
+This repository contains some code created for the "Digital Archiving and the Object" project at the DWRL @ UT Austin in the Spring of 2016, among them our beloved speech bot Arisbotle. 
 
 #### Who is Arisbotle?
 
