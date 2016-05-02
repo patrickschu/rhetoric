@@ -1,9 +1,9 @@
-# DWRL project "Digital Archives"
+## DWRL project "Digital Archives"
 
-## Getting to know Arisbotle
+### Getting to know Arisbotle
 
 
-## Running the Arisbotle script
+### Running the Arisbotle script
 
 Open the "Terminal" app and navigate to the folder the script is saved in, e.g. 
 `cd Downloads/rhetoric-master`
