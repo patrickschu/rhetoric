@@ -1,4 +1,5 @@
-## Digital Writing and Research Lab, UT Austin. Spring 2016 Project "Digital Archives"
+## Digital Writing and Research Lab, UT Austin. 
+Spring 2016: "Digital Archiving and the object"
 
 ### Getting to know Arisbotle
 
