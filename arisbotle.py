@@ -4,40 +4,6 @@ import re, numpy as np, codecs, os, nltk, collections, time
 from string  import digits, punctuation
 import generatortools as gt
 import sys
-		
-
-##need to use word dict counts instead of overall-count for trigrams, right???
-## <s> and </s>
-## use bigram probs for evaluation
-# i.e. is a problem
-# make the threshold for random selection variable, i.e. top X percent, so it won't break
-# log probabilities from the start
-# cutoff probability could be relative to sentence lenght, too
-# 
-# import schedule
-# import time
-# 
-# def job():
-#     print("I'm working...")
-# 
-# schedule.every(10).minutes.do(job)
-# schedule.every().hour.do(job)
-# schedule.every().day.at("10:30").do(job)
-# 
-# while 1:
-#     schedule.run_pending()
-#     time.sleep(1)
-
-
-def tweeter(interval, input_list):
-		for i in range(0,5):
-			time.sleep(interval)
-			if len (input_list) > 0:
-				bot=gt.loginmachine("twitter_keys.txt")
-				bot.update_status(status=tweets[success-1])
-				print "tweeting"
-			else:
-				pass
 
 def main(input_folder, iter = 1000, probability_cutoff = - 40 , threshold = 10, tweet=True):
 	"""
