@@ -71,15 +71,11 @@ print type(t)
 
 from twython import Twython
 
-s=open("twitter_keys.txt", "r")
-t=s.read()
-key=t.split(",")[0]
-secret=t.split(",")[1]
-token=t.split(",")[2]
-token_secret=t.split(",")[3]
-# first item is API key, second is API secret, third is access token, 4th token secret
-#twitter = Twython(APP_KEY, APP_SECRET,
-#                  OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-
-boti= Twython(key, secret,token,token_secret)
-boti.update_status(status='How hard can this be?')
+login=open("twitter_keys.txt", "r")
+login=login.read()
+key=login.split(",")[0]
+secret=login.split(",")[1]
+token=login.split(",")[2]
+token_secret=login.split(",")[3]
+arisbotle= Twython(key, secret,token,token_secret)
+arisbotle.update_status(status='How hard can this be?')
