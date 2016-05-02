@@ -2,7 +2,7 @@
 
 ### Getting to know Arisbotle
 
-You can read more about this project here[http://www.dwrl.utexas.edu/2016/04/19/reviving-the-archive-aristotle-re-animated/]. 
+You can read more about this project [here](http://www.dwrl.utexas.edu/2016/04/19/reviving-the-archive-aristotle-re-animated/). 
 
 ### Running the Arisbotle script
 
