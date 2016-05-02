@@ -1,4 +1,4 @@
-### Digital Writing and Research Lab: "Digital Archiving and the object"
+### Digital Writing and Research Lab: "Digital Archiving and the Object"
 
 #### Who is Arisbotle?
 
