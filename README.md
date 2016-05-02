@@ -1,8 +1,8 @@
-### Digital Writing and Research Lab, UT Austin. "Digital Archiving and the object"
+### Digital Writing and Research Lab: "Digital Archiving and the object"
 
 #### Getting to know Arisbotle
 
-Arisbotle is a speech bot that can create and tweet sentences. He learns from a corpus of classical writings and uses a trigram language model to create new sentences of his own. He is part of a research project at the [Digital Writing and Research Lab[(http://www.dwrl.utexas.edu/) at [UT Austin](https://twitter.com/TexasSports). You can read more about this project [here](http://www.dwrl.utexas.edu/2016/04/19/reviving-the-archive-aristotle-re-animated/). 
+Arisbotle is a speech bot that can create and tweet sentences. He learns from a corpus of classical writings and uses a trigram language model to create new sentences of his own. He is part of a research project at the [Digital Writing and Research Lab](http://www.dwrl.utexas.edu/) at [UT Austin](https://twitter.com/TexasSports). You can read more about this project [here](http://www.dwrl.utexas.edu/2016/04/19/reviving-the-archive-aristotle-re-animated/). 
 
 #### Running the Arisbotle script
 
