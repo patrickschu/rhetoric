@@ -5,7 +5,9 @@
 Arisbotle is a speech bot that can create and tweet sentences. He learns from a corpus of classical writings and uses a trigram language model to create new sentences of his own. He is part of a research project at the [Digital Writing and Research Lab](http://www.dwrl.utexas.edu/) at [UT Austin](https://twitter.com/TexasSports). You can read more about this project [here](http://www.dwrl.utexas.edu/2016/04/19/reviving-the-archive-aristotle-re-animated/). 
 
 #### Running the Arisbotle script
-Download the code from [https://github.com/patrickschu/rhetoric].
+
+Download the code from https://github.com/patrickschu/rhetoric.
+
 Open the "Terminal" app and navigate to the folder the script is saved in, e.g. 
 `cd Downloads/rhetoric-master`
 
