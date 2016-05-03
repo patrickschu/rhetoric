@@ -102,7 +102,7 @@ def sentbuilder(startstring, endstring, threshold, worddict, *args):
 	#print word
 	sentence.append(word[0])
 	probs.append(math.log(word[1]))
- 	while word[0] not in endstring:
+ 	while word[0] not in endstring & len(sentence) < 8:
  		prev_word=sentence[len(sentence)-2]
  		#print prev_word
  		current_word=sentence[len(sentence)-1]
@@ -115,7 +115,7 @@ def sentbuilder(startstring, endstring, threshold, worddict, *args):
  		#print "word less 2 UPDATED length ", len(word_less_two)
  		next_word_sorted=sorted(freqs.items(), key=lambda x: x[1], reverse=True)
  		#word=next_word_sorted[0][0]
- 		word=random.choice(next_word_sorted[:threshold])
+ 		word=random.choice(next_word_sorted[:int(threshold)])
  		sentence.append(word[0])
  		probs.append(math.log(word[1]))
  	else:
