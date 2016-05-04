@@ -102,7 +102,7 @@ def sentbuilder(startstring, endstring, threshold, worddict, *args):
 	#print word
 	sentence.append(word[0])
 	probs.append(math.log(word[1]))
- 	while word[0] not in endstring & len(sentence) < 8:
+ 	while word[0] not in endstring and len(sentence) < 8:
  		prev_word=sentence[len(sentence)-2]
  		#print prev_word
  		current_word=sentence[len(sentence)-1]
