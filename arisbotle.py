@@ -5,7 +5,7 @@ from string  import digits, punctuation
 import generatortools as gt
 import sys
 
-def main(input_folder, iter = 1000, probability_cutoff = - 50 , threshold = 10, tweet=True):
+def main(input_folder, iter = 1000, probability_cutoff = - 35 , threshold = 10, tweet=True):
 	"""
 	iter sets the number of times to run the sentence builder
 	threshold is fed into the sentbuilder and sets the number of items to consider when choosing from the candidates
@@ -31,22 +31,23 @@ def main(input_folder, iter = 1000, probability_cutoff = - 50 , threshold = 10, 
 		sent, probs = gt.sentbuilder(".", ".?!", threshold, worddicti,  bigramdicti, trigramdicti)
 		#here we set the probability cutoff (logged values)
 		#note that we might want to exclude the first, "seed" item
-		if sum(probs) > int(probability_cutoff):
+		
+		if sum(probs[1:len(probs)]) > int(probability_cutoff):
 				output=" ".join(sent).lstrip(".")
 				print "Aristotle says: "
 				print output, "\n"
-				print "Probability", sum(probs), probs
+				print "Probability", sum(probs[1:len(probs)]), probs
 				success=success+1
 				tweets.append(output)
-				if tweet:
+				if tweet == True:
 					bot=gt.loginmachine("twitter_keys.txt")
 					bot.update_status(status=tweets[success-1])
 					print "tweeting"
-					time.sleep(3600)
+					time.sleep(500)
 					print "now sleeping"
 		else:
 				print "No good sentence found"
-				outputfile.write (" ".join(sent)+","+str(sum(probs))+","+" ".join([str(i) for i in probs])+"\n")
+				outputfile.write (" ".join(sent)+","+str(sum(probs[1:len(probs)]))+","+" ".join([str(i) for i in probs])+"\n")
 				
 	print "{} successes".format(success)
 	outputfile.close()		
