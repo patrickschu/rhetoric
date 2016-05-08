@@ -25,7 +25,7 @@ where the folder_of_textfiles is a directory that contains the text files you wa
 
 Where `iter` is the number of iterations, i.e. the number of sentences to generate. The `probability_cutoff` specifies the mininum probability (in log space) a sentence needs to meet to be published / tweeted. `threshold` determines the number of words the sentence building algorithm considers when picking a word Y to follow word X. Larger numbers give more variety, smaller numbers higher quality sentences. `tweet` turns the Twittter functionality on (`True`) and off (`False`). The values shown above are the defaults the script will use unless told otherwise. Note that for Twitter to work you need to have a file with the tokens and secrets to log into the Twitter API. 
 
-### Etc
+### Etc.
 
 Citation. 
 Schultz, Patrick. Arisbotle: A philosophical speech bot, 2016, https://github.com/patrickschu/rhetoric/ [Online; accessed XXXX-XX-XX].
