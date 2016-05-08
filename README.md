@@ -25,6 +25,19 @@ where the folder_of_textfiles is a directory that contains the text files you wa
 
 Where `iter` is the number of iterations, i.e. the number of sentences to generate. The `probability_cutoff` specifies the mininum probability (in log space) a sentence needs to meet to be published / tweeted. `threshold` determines the number of words the sentence building algorithm considers when picking a word Y to follow word X. Larger numbers give more variety, smaller numbers higher quality sentences. `tweet` turns the Twittter functionality on (`True`) and off (`False`). The values shown above are the defaults the script will use unless told otherwise. Note that for Twitter to work you need to have a file with the tokens and secrets to log into the Twitter API. 
 
+### Etc
+
+Citation. 
+Schultz, Patrick. Arisbotle: A philosophical speech bot, 2016, https://github.com/patrickschu/rhetoric/ [Online; accessed XXXX-XX-XX].
+
+The MIT License (MIT)
+Copyright (c) 2016 Patrick Schultz
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 <!--- 
 #### How to cite this piece of code
