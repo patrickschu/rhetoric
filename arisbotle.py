@@ -16,8 +16,8 @@ def main(input_folder, iter = 1000, probability_cutoff = - 35 , threshold = 10, 
 	success=0
 	tweets=[]
 	outputfile=codecs.open("aristotlelog_"+time.strftime("%m_%d_%Y")+".txt",  "a", "utf-8")
-	dir=input_folder
-	files=[os.path.join("out", i) for i in os.listdir(dir) if not i.startswith(".")]
+	dir=os.path.expanduser(input_folder)
+	files=[os.path.join(dir, i) for i in os.listdir(dir) if not i.startswith(".")]
 	#print "We're working with these files: ", files
 	print "Making the word dicti"
 	worddicti=gt.dictmaker(files, 1)
@@ -40,10 +40,10 @@ def main(input_folder, iter = 1000, probability_cutoff = - 35 , threshold = 10, 
 				success=success+1
 				tweets.append(output)
 				if tweet == True:
-					bot=gt.loginmachine("twitter_keys.txt")
+					bot=gt.loginmachine(os.path.expanduser(os.path.join("~/Downloads", "twitter_keys.txt")))
 					bot.update_status(status=tweets[success-1])
 					print "tweeting"
-					time.sleep(500)
+					time.sleep(3600)
 					print "now sleeping"
 		else:
 				print "No good sentence found"
