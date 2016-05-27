@@ -43,7 +43,7 @@ def main(input_folder, iter = 1000, probability_cutoff = - 35 , threshold = 10, 
 					bot=gt.loginmachine(os.path.expanduser(os.path.join("~/Downloads", "twitter_keys.txt")))
 					bot.update_status(status=tweets[success-1])
 					print "tweeting"
-					time.sleep(3600)
+					time.sleep(5000)
 					print "now sleeping"
 		else:
 				print "No good sentence found"
