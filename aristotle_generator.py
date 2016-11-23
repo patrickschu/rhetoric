@@ -14,7 +14,7 @@ def adtextextractor(text, fili):
         print "alarm in adtextextractor", fili, result
     return result[0]
 
-#stole this from: http://locallyoptimal.com/blog/2013/01/20/elegant-n-gram-generation-in-python/
+#adapted from: http://locallyoptimal.com/blog/2013/01/20/elegant-n-gram-generation-in-python/
 def find_ngrams(text, n):
   return zip(*[text[i:] for i in range(n)])
 
